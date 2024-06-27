@@ -166,7 +166,11 @@ transaction_details as (
     items.sales_description,
     locations.name as location_name,
     locations.city as location_city,
-    locations.country as location_country,
+    locations.country as location_country
+    
+    --The below script allows for locations table pass through columns.
+    {{ fivetran_utils.persist_pass_through_columns('locations_pass_through_columns', identifier='locations') }},
+    
     {% if var('netsuite2__using_vendor_categories', true) %}
     vendor_categories.name as vendor_category_name,
     {% endif %}
